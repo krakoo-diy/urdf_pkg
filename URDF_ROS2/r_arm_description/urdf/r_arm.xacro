@@ -1,0 +1,85 @@
+<?xml version="1.0" ?>
+<robot name="r_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find r_arm_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find r_arm_description)/urdf/r_arm.ros2control" />
+<xacro:include filename="$(find r_arm_description)/urdf/r_arm.gazebo" />
+<link name="base_link">
+  <inertial>
+    <origin xyz="0.0 0.0 0.005" rpy="0 0 0"/>
+    <mass value="0.7849999999999999"/>
+    <inertia ixx="0.000661" iyy="0.000661" izz="0.001308" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find r_arm_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find r_arm_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link1_1">
+  <inertial>
+    <origin xyz="0.0 0.0 0.054999999999999986" rpy="0 0 0"/>
+    <mass value="0.6103721826843267"/>
+    <inertia ixx="0.00065" iyy="0.00065" izz="6.9e-05" ixy="-0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.0 -0.01" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find r_arm_description)/meshes/link1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 -0.0 -0.01" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find r_arm_description)/meshes/link1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link2_1">
+  <inertial>
+    <origin xyz="0.0 0.0 0.012500000000000011" rpy="0 0 0"/>
+    <mass value="1.1775"/>
+    <inertia ixx="0.00015" iyy="0.003986" izz="0.004013" ixy="0.0" iyz="0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.0 -0.12" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find r_arm_description)/meshes/link2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 -0.0 -0.12" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find r_arm_description)/meshes/link2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="link1_joint" type="continuous">
+  <origin xyz="0.0 0.0 0.01" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="link1_1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+</joint>
+
+<joint name="link2_joint" type="prismatic">
+  <origin xyz="0.0 0.0 0.11" rpy="0 0 0"/>
+  <parent link="link1_1"/>
+  <child link="link2_1"/>
+  <axis xyz="1.0 0.0 0.0"/>
+  <limit upper="0.01" lower="-0.01" effort="100" velocity="100"/>
+</joint>
+
+</robot>
